@@ -1,0 +1,4 @@
+app.use('/', indexRouter);
+// /로 요청을 보냈을 indexRouter를 쏴준다.
+app.use('/user', userRouter);
+// /user로 요청받았을 때는 얘를 쏴준다.
