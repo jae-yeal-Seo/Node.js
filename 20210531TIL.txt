@@ -1,0 +1,27 @@
+워크벤치가 뭔지 알아보자
+-->데이터베이스 설계 도구
+-->설치는 이미 했음
+
+mysql접속
+-->mysql - h localhost -u root - p 
+-->비밀번호 입력
+-->mysql>
+-->나가는 건 exit
+
+커넥션 생성
+-->이미생성함
+-->Connection Name에 localhost적고 
+-->비밀번호 입력하면 됨.
+
+데이터베이스, 테이블 생성하기
+-->CREATE SCHEMA nodejs;로 nodejs란 DB생성
+-->use nodejs;를 사용해서 데이터베이스를 선택한다.
+-->테이블을 생성한다.
+-->테이블 형성할 때 nodejs.comments해석
+-->nodejs는 데이터베이스명이고 comments는 테이블명이다. 
+
+CRUD작업하기
+-->INSERT INTO 부터 따라 써보자.
+
+다음시간에 할 것
+comments테이블 작성 잘못한 것 같아서 다시 지우고 할려고 했는데 users도 삭제해버림.
