@@ -1,0 +1,100 @@
+static init(sequelize)의 첫번째 인수
+-->MySQL자료형과 시퀄라이즈 자료형은 다르다. 
+-->INTEGER.UNSIGNED : 양수 표시
+-->321페이지 참조
+
+static init(sequelize)의 두번째 인수
+-->sequelize : 그냥 sequelize적으면 됨
+-->timestamp : createAt(생성시간) updateAt(수정시간) column자동생성 
+-->underscore : Camel case --> snake case
+-->modelName : 모델(MySQL의 테이블에 대응)이름 설정(User)
+-->tableName : 실제 DB의 테이블 이름(Node의 모델에 대응)(-->users)
+-->paranoid : 나중에 복원하기 위해 사용
+-->charset, collate : 한글 쓰기위해서 사용,그냥 320페이지랑 똑같이 쓰면됨.
+
+models/comment.js
+-->users.js의 외래키가 commenter로 되어있다. 
+-->그런데 comment.js에 commenter라는 column이 없다?!
+-->시퀄라이즈 자체에서 관계를 따로 정의한다.(시퀄라이즈가 JOIN기능알아서 구현함)(관계만 알려주면(ex)1:1, 1:N, N:M)
+-->models/index.js에서 User, Comment모델을 추가한다.
+-->
+db.User=User;
+db.Comment=Comment;
+
+User.init(sequelize);
+Comment.init(sequelize);
+
+User.associate(db);
+Comment.associate(db);
+
+7.6.3 관계 정의하기
+-->users테이블과 comments테이블 간의 관계 정의
+-->사용자 하나에 댓글 여러개 (1:N관계)
+-->1:N
+--->hasMany, belongsTo메서드로 표현(325페이지 참조)
+-->1:1
+--->hasOne, belongsTo사용
+-->N:M
+-->328페이지 참조
+
+
+기타꿀팁
+-->[]에는 속성이름이 들어간다.
+
+// app.js
+
+
+// ...
+
+
+var indexRouter = require('./routes/index');
+
+
+var usersRouter = require('./routes/users'
+);
+
+1차로 주소를 탄다.
+app.use(
+'/', indexRouter);
+app.use(
+'/users', usersRouter);
+// routes/index.js
+
+2차로 주소를 탄다.
+var express = require('express');
+var router = express.Router();
+/* GET home page. */
+router.get('/abc', function(req, res, next) 
+//이렇게 하면 /user/abc까지 가게 된다. 즉 세분화를 시키기 위함이다.
+{
+  res.render(
+'index', { title: 'Express'
+ });
+// 클라이언트에 응답을 보냅니다.
+});
+module.exports = router;
+
+처음 시작 
+app.js -->pageRouter분석-->얘는 routes/page를 받는 애임-->routes/page로 가면-->/,/join,/profile이렇게 주소별로 렌더링 해주는 파일이 다르다. 
+
+처음 localhost:8001을 입력하면 나오는 창('/')
+(1)기본적인 것
+ : page.js에서 /는 main을 쏴준다고 나와있다. -->views에 있는 main을 봐야겠다.
+ *res.render를 하면 자동으로 누가 views에 보내기로 했지? app.js에서 nunjucks.configure('views,~)에 의해
+ : main --> layout.html을 상속했기 때문에 처음에 나오는 화면이 나오는 것이다. 
+ : layout.html은 로그인을 하지 않으면 layout.html만 나오고 그렇지 않으면  {% if user %} 세상이 열린다.
+
+처음 localhost:8001을 입력하면 나오는 창('/')
+(2)회원가입을 눌렀을 경우
+ : /join으로 들어간다.
+ : join도 역시 layout.html을 상속하고 있어서 그 모습 그대로 회원가입 창이 뜬다. 
+ : 그리고 정보를 다 입력한 뒤에 회원가입을 누르면 해당 정보를 /auth/join으로 쏴준다.
+ : auth.js의 router.post('/join'~)를 보면 요청의 body부분의 email, nick, password를 저장하고 
+ : User.creat로 저장한다. 단, 이미 있는 계정이면 (if(exUser)) 에러를 표하고 끝낸다.
+ : 저장하고 나면 원래 주소 ('/')로 redirect한다.
+
+
+기타 꿀팁
+*app.js에서 
+const authRouter = require('./routes/auth');-->app.use('/auth', authRouter);
+--그
