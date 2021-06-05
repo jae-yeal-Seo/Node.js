@@ -1,0 +1,21 @@
+middlewares.js
+-->isLoggedIn
+-->isNotLoggedInt
+-->둘다 req.isAuthenticated가 true(로그인 되어있음)거나 false(로그인 안 되어있음)여야 next가 호출되어 routes/auth.js에서 router.post('/join')은 isLoggedIn을, router.post('/login')은 isNotLoggedIn을 가진다.
+
+passport(여권)
+-->index.js, kakaoStrategy.js, localStrategy.js
+-->passport.serializeUser와 passport.deserializeUser가 핵심이다.
+-->passport.serializeUser는 사용자정보 객체를 세션에 아이디로 저장하는 것. 
+-->passport.deserializeUser는 아이디를 통해 사용자 정보 객체를 불러오는 것.
+
+app.set(키,값) -->설정
+app.get(키) -->가져오기
+
+process.env : 내장 스크립트 객체 
+--> 확인은? node ->process.env입력
+--> 설정은? 터미널에서 export API_KEY=abc이런식으로.
+
+app.use('주소','미들웨어')
+
+-->파일 -->폴더열기로 창을 분리시킨다.
